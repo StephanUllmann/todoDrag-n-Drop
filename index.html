@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Asap:wght@100;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./script.js" defer></script>
+    <title>Todo</title>
+  </head>
+  <body class="dark-theme">
+    <header class="todo__header">
+      <h1 class="todo__heading">toDo</h1>
+      <div class="theme-toggle">light</div>
+    </header>
+    <main class="container">
+      <div class="list__wrapper list__todo" id="todo">
+        <h2 class="todo__heading">to do</h2>
+        <li class="todo__item todo__new" draggable="false">
+          <form action="#" class="todo__new--form">
+            <input
+              type="text"
+              class="todo__new--input"
+              value=""
+              placeholder="e.g. write a todo-app"
+            />
+            <button class="todo__new--btn">go</button>
+          </form>
+        </li>
+        <ul class="todo__list todo__list--todo">
+          <!--TODO ListItem -->
+          <!-- <li class="todo__item" draggable="true" id="${item.id}">
+            <form class="todo__item-heading" spellcheck="false">
+              <div
+              contenteditable
+                class="todo__item-text"
+                
+              >${item.text}</div>
+            </form>
+            <div class="todo__menu">
+              <button class="todo__menu-btn">edit</button>
+              <button class="todo__menu-btn" id="delete">delete</button>
+            </div>
+          </li> -->
+          <!-- TODO ListItem End -->
+        </ul>
+      </div>
+      <div class="list__wrapper list__doing" id="doing">
+        <h2 class="todo__heading">doing</h2>
+        <ul class="todo__list todo__list--doing"></ul>
+      </div>
+      <div class="list__wrapper list__done" id="done">
+        <h2 class="todo__heading">done</h2>
+        <ul class="todo__list todo__list--done"></ul>
+      </div>
+    </main>
+  </body>
+</html>
