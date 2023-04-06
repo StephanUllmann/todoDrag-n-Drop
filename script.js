@@ -25,9 +25,10 @@ themeToggle.addEventListener("click", () => {
 });
 
 const renderItem = function (item) {
+  console.log(item);
   if (item.deleted === true) return;
-
   const parentNode = document.querySelector(`.todo__list--${item.state}`);
+  console.log(parentNode);
   const html = `
     <li class="todo__item" draggable="true" id="${item.id}" data-state="${item.state}">
             <form class="todo__item-heading" spellcheck="false">
@@ -65,6 +66,7 @@ const enableChangeTodoTextOnSubmit = function (node, todoObj) {
     if (e.key === "Enter" && !e.shiftKey) {
       todoObj.text = newValue;
       document.activeElement.blur();
+      localStorage.setItem("toDoItemsRef", JSON.stringify(toDoArray));
     }
   });
 };
