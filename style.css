@@ -1,8 +1,8 @@
 .dark-theme {
-  --color-primary: #252525;
-  --color-sec: rgba(181, 181, 181, 0.075);
-  --color-shadow: #7b7b7b;
-  --color-active: rgba(123, 123, 123, 0.75);
+  --color-primary: #1e1e1e;
+  --color-sec: rgba(140, 140, 140, 0.075);
+  --color-shadow: #555555;
+  --color-active: rgba(123, 123, 123, 0.507);
   --color-font: #dadada;
   --color-border: #424242;
 }
@@ -10,8 +10,8 @@
 .light-theme {
   --color-primary: ##dadada;
   --color-sec: rgba(255, 255, 255, 0.779);
-  --color-shadow: #3b3b3b;
-  --color-active: rgba(217, 217, 217, 0.578);
+  --color-shadow: #676767;
+  --color-active: rgba(217, 217, 217, 0.868);
   --color-font: #252525;
   --color-border: rgb(222, 222, 222);
 }
@@ -38,23 +38,46 @@ body {
   min-height: 100vh;
   background-color: var(--color-primary);
   color: var(--color-font);
-  font-family: "Asap", sans-serif;
+  font-family: "Alegreya Sans", sans-serif;
   transition: background-color 0.2s;
 }
 
 .todo__header {
-  padding: 5rem;
+  padding: 2rem;
   position: relative;
 }
 
 h1.todo__heading {
   text-align: center;
-  font-size: 3rem;
+  font-size: 5.5rem;
+  letter-spacing: 2px;
+  /* text-transform: uppercase; */
+}
+
+.todo__header p {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 1.75rem;
+  letter-spacing: 2px;
 }
 
 h2.todo__heading {
   text-align: center;
   font-size: 2rem;
+  position: relative;
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+h2.todo__heading::after {
+  content: "";
+  position: absolute;
+  width: 107%;
+  inset: auto -1px 0 -1px;
+  height: 1px;
+  rotate: -2.5deg;
+  background-color: var(--color-font);
 }
 
 .theme-toggle {
