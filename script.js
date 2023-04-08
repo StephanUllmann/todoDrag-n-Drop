@@ -127,10 +127,9 @@ const renderLists = function () {
     enableChangeTodoTextOnSubmit(newNode, item);
     enableDeleteBtn(newNode, item);
     enableDrag(newNode);
-    //   setTimeout(() => {
-    //     newNode.classList.remove("delete");
-    //   }, 200);
-    // });
+    // setTimeout(() => {
+    //   newNode.classList.remove("delete");
+    // }, 200);
     localStorage.setItem("toDoItemsRef", JSON.stringify(toDoArray));
   });
 };
