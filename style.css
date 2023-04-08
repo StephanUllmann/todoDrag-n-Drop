@@ -1,14 +1,16 @@
 .dark-theme {
-  --color-primary: #1e1e1e;
+  --color-primary: #11161e;
+  --color-grad-sec: #111e18;
   --color-sec: rgba(140, 140, 140, 0.075);
   --color-shadow: #555555;
-  --color-active: rgba(123, 123, 123, 0.507);
+  --color-active: rgba(123, 123, 123, 0.199);
   --color-font: #dadada;
   --color-border: #424242;
 }
 
 .light-theme {
-  --color-primary: ##dadada;
+  --color-primary: #fff4ed;
+  --color-grad-sec: #e4e2f5;
   --color-sec: rgba(255, 255, 255, 0.779);
   --color-shadow: #676767;
   --color-active: rgba(217, 217, 217, 0.868);
@@ -36,7 +38,12 @@ html {
 
 body {
   min-height: 100vh;
-  background-color: var(--color-primary);
+  /* background-color: var(--color-primary); */
+  background-image: linear-gradient(
+    to right top,
+    var(--color-primary),
+    var(--color-grad-sec)
+  );
   color: var(--color-font);
   font-family: "Alegreya Sans", sans-serif;
   transition: background-color 0.2s;
@@ -103,15 +110,17 @@ h2.todo__heading::after {
   justify-content: space-around;
   gap: 2rem;
   margin: 0 1rem;
+  flex-wrap: wrap;
 }
 
 .list__wrapper {
   height: 75vh;
   background-color: var(--color-sec);
-  flex: 0 1 40rem;
+  flex: 1 1 30rem;
   border-radius: 1rem;
   box-shadow: 1px 1px 2px var(--color-shadow);
   padding: 1rem;
+  /* margin: 0 3rem; */
 }
 
 .todo__item {
@@ -123,6 +132,7 @@ h2.todo__heading::after {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: all 0.5s;
 }
 
 /* .todo__item:active {
@@ -204,11 +214,39 @@ h2.todo__heading::after {
   font-weight: 700;
 }
 
+#clearStorage {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 3rem;
+  color: var(--color-font);
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 1px 1px 2px var(--color-shadow);
+  background-color: var(--color-sec);
+  transition: all 0.1s;
+}
+
+#clearStorage:active {
+  box-shadow: none;
+  transform: translateY(2px);
+}
+
 .drag-active {
   background-color: var(--color-active);
   transition: background-color 0.5s;
 }
 
 .hide {
-  display: none;
+  /* display: none; */
+  opacity: 0;
+  transition: all 0.15s;
+}
+
+.delete {
+  transform: scale(0) translateY(100%) rotate(5deg);
+  opacity: 0;
+  transition: all 0.5s;
 }

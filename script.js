@@ -7,10 +7,9 @@ const doneListEl = document.querySelector(".todo__list--done");
 const newItemFormEl = document.querySelector(".todo__new--form");
 const inputEl = document.querySelector(".todo__new--input");
 const toDoTexts = document.getElementsByClassName("todo__item-heading");
+const clearBtnEl = document.getElementById("clearStorage");
 
 let toDoArray = [];
-
-// const themes = [".dark-theme", ".light-theme"];
 
 const toggleThemes = function () {
   const currTheme = document.body.classList[0];
@@ -25,10 +24,8 @@ themeToggle.addEventListener("click", () => {
 });
 
 const renderItem = function (item) {
-  console.log(item);
   if (item.deleted === true) return;
   const parentNode = document.querySelector(`.todo__list--${item.state}`);
-  console.log(parentNode);
   const html = `
     <li class="todo__item" draggable="true" id="${item.id}" data-state="${item.state}">
             <form class="todo__item-heading" spellcheck="false">
@@ -44,19 +41,42 @@ const renderItem = function (item) {
           </li>
     `;
   parentNode.insertAdjacentHTML("beforeend", html);
+  // console.log(parentNode.children);
+  // setTimeout(() => {
+  //   [parentNode.children].forEach((child) => {
+  //     console.log(child.classList);
+  //     // child.classList.remove("delete");
+  //   }, 1000);
+  // });
 };
+
+function placeCaretAtEnd(el) {
+  el.focus();
+  if (
+    typeof window.getSelection != "undefined" &&
+    typeof document.createRange != "undefined"
+  ) {
+    let range = document.createRange();
+    range.selectNodeContents(el);
+    range.collapse(false);
+    let sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  } else if (typeof document.body.createTextRange != "undefined") {
+    let textRange = document.body.createTextRange();
+    textRange.moveToElementText(el);
+    textRange.collapse(false);
+    textRange.select();
+  }
+}
 
 const putFocusOnNode = function (node) {
   node.addEventListener("click", (e) => {
     if (e.target.tagName === "BUTTON") return;
     const inputField =
       e.target.tagName === "DIV" ? e.target : e.target.children[0].children[0];
-    // console.log(inputField);
     inputField.focus();
-    // console.log(document.activeElement.classList.contains("todo__item-text"));
-    // const tempText = inputField.textContent;
-    // inputField.textContent = "";
-    // inputField.textContent = tempText + " ";
+    placeCaretAtEnd(inputField);
   });
 };
 
@@ -74,7 +94,10 @@ const enableChangeTodoTextOnSubmit = function (node, todoObj) {
 const enableDeleteBtn = function (node, item) {
   node.children[1].children[0].addEventListener("click", (e) => {
     item.deleted = true;
-    node.remove(node);
+    node.classList.add("delete");
+    node.addEventListener("finish", (e) => {
+      node.remove(node);
+    });
   });
 };
 
@@ -83,7 +106,9 @@ const enableDrag = function (node) {
     e.dataTransfer.clearData();
     e.dataTransfer.setData("text/plain", e.target.id);
     e.dataTransfer.effectAllowed = "move";
+
     setTimeout(() => {
+      // e.target.classList.add("deletes");
       e.target.classList.add("hide");
     }, 0);
   });
@@ -102,9 +127,11 @@ const renderLists = function () {
     enableChangeTodoTextOnSubmit(newNode, item);
     enableDeleteBtn(newNode, item);
     enableDrag(newNode);
+    // setTimeout(() => {
+    //   newNode.classList.remove("delete");
+    // }, 200);
+    localStorage.setItem("toDoItemsRef", JSON.stringify(toDoArray));
   });
-  // console.log(toDoTexts);
-  localStorage.setItem("toDoItemsRef", JSON.stringify(toDoArray));
 };
 
 const createNewItem = function (text) {
@@ -120,19 +147,11 @@ const createNewItem = function (text) {
 
 newItemFormEl.addEventListener("submit", (e) => {
   e.preventDefault();
-  // console.log(inputEl.value);
   if (!inputEl.value) return;
   createNewItem(inputEl.value);
   inputEl.value = "";
   inputEl.focus();
 });
-
-// [...toDoTexts].forEach((text) =>
-//   text.addEventListener("submit", (e) => {
-//     e.preventDefault();
-//     console.log(e.target);
-//   })
-// );
 
 document.addEventListener("DOMContentLoaded", () => {
   const savedList = localStorage.getItem("toDoItemsRef");
@@ -159,7 +178,6 @@ const dragover = (event) => {
 
 const drop = (event) => {
   event.preventDefault();
-  // console.log(event);
   event.target.classList.remove("drag-active");
   event.dataTransfer.effectAllowed = "move";
 
@@ -175,4 +193,15 @@ const drop = (event) => {
   list.addEventListener("dragleave", (e) => dragleave(e));
   list.addEventListener("dragover", (e) => dragover(e));
   list.addEventListener("drop", (e) => drop(e));
+});
+
+clearBtnEl.addEventListener("click", () => {
+  localStorage.removeItem("toDoItemsRef");
+  toDoArray.forEach((item) =>
+    document.getElementById(item.id).classList.add("delete")
+  );
+  setTimeout(() => {
+    toDoArray = [];
+    renderLists();
+  }, 250);
 });
