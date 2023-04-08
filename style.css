@@ -9,7 +9,8 @@
 }
 
 .light-theme {
-  --color-primary: ##dadada;
+  --color-primary: #fff4ed;
+  --color-grad-sec: #e4e2f5;
   --color-sec: rgba(255, 255, 255, 0.779);
   --color-shadow: #676767;
   --color-active: rgba(217, 217, 217, 0.868);
